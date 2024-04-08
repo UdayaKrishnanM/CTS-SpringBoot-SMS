@@ -20,7 +20,7 @@ public class Player {
 		private int id;
 	
 	  @Column(name = "player_name")
-	  @Pattern(regexp = "^[a-zA-Z]+$", message = "Name must contain only letters")
+	  @Pattern(regexp = "^[a-zA-Z ]+$", message = "Name must contain only letters")
 	  private String name;
 	
 	  @Column(name = "player_age")

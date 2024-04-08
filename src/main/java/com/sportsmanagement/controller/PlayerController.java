@@ -53,7 +53,7 @@ public class PlayerController {
     @PostMapping("/addPlayer")
     public String addPlayer(@ModelAttribute Player player, Model model) {
     	
-    	if(!player.getName().matches("[a-zA-Z]+")) {
+    	if(!player.getName().matches("[a-zA-Z ]+")) {
     		model.addAttribute("error", "Name must contain only letters");
         	return "addPlayer";
     	} else if(player.getAge()<20 || player.getAge()>45) {

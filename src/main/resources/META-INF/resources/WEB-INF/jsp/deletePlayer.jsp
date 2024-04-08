@@ -4,41 +4,93 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Delete a Player</title>
-<script >
-document.addEventListener("DOMContentLoaded", function() {
-    var message = "${message}";
-    if (message.trim() !== "") {
-        alert(message);
-    }
-    
-    document.querySelector("form").addEventListener("submit", function(event) {
-        var confirmDelete = confirm('Are you sure you want to delete this player?');
-        if (!confirmDelete) {
-            event.preventDefault(); // Prevent form submission if user cancels
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var message = "${message}";
+        if (message.trim() !== "") {
+            alert(message);
+        }
+        
+        document.querySelector("form").addEventListener("submit", function(event) {
+            var confirmDelete = confirm('Are you sure you want to delete this player?');
+            if (!confirmDelete) {
+                event.preventDefault(); // Prevent form submission if user cancels
+            }
+        });
+        
+        var error = "${error}";
+        if (error.trim() !== "") {
+            alert(error);
         }
     });
-});
-	
 </script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #fff;
+    }
+
+    form {
+        width: 50%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    p.error {
+        color: red;
+        text-align: center;
+    }
+</style>
 </head>
-
-
 <body>
-
-	<h1>Delete Player</h1>
-    <form action="/players/deletePlayer" method="post" onsubmit="return confirmDelete()">
-        <label for="id>">Player ID: </label>
+    <h1>Delete Player</h1>
+    <form action="/players/deletePlayer" method="post">
+        <label for="id">Player ID:</label>
         <input type="text" name="id" required><br><br>
         <input type="submit" value="Submit">
     </form>
 
-
-    
-   	<c:if test="${not empty error}">
-		<p style="color: red;">${error}</p>
-	</c:if>
 
 </body>
 </html>
