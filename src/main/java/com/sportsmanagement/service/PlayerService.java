@@ -56,13 +56,21 @@ public class PlayerService {
 
     	
     public boolean deletePlayer(int id) {
-    	boolean flag = true;
-    	if(playerRepository.findById(id) != null) {
-    		playerRepository.deleteById(id);
+
+    	playerRepository.deleteById(id);
+    	if(playerRepository.findById(id).isEmpty()) {
     		return true;
-    	} else {
-    		return false;
     	}
+    	 return false;
+    	
+//    old code workd
+//    	boolean flag = true;
+//    	if(playerRepository.findById(id) != null) {
+//    		playerRepository.deleteById(id);
+//    		return true;
+//    	} else {
+//    		return false;
+//    	}
     }
 
     public List<Player> getAllPlayers() {

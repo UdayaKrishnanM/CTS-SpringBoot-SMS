@@ -7,26 +7,60 @@
 <title>Delete a Player</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var message = "${message}";
-        if (message.trim() !== "") {
-            alert(message);
-        }
+   
+//document.addEventListener("DOMContentLoaded", function() {
+  //      var message = "${message}";
+    //    if (message.trim() !== "") {
+      //      alert(message);
+        //}
         
-        document.querySelector("form").addEventListener("submit", function(event) {
-            var confirmDelete = confirm('Are you sure you want to delete this player?');
-            if (!confirmDelete) {
-                event.preventDefault(); // Prevent form submission if user cancels
+//        document.querySelector("form").addEventListener("submit", function(event) {
+ //           var confirmDelete = confirm('Are you sure you want to delete this player?');
+  //          if (!confirmDelete) {
+    //            event.preventDefault(); // Prevent form submission if user cancels
+      //      } else{
+ //           	alert("$error");
+ //           }
+ //       });
+        
+ //       var error = "${error}";
+ //       if (error.trim() !== "") {
+  //          alert(error);
+   //     }
+  //  });
+  
+  function validateForm() {
+    var playerId = document.getElementById('id').value;
+    // Check if playerId is a number
+    if (isNaN(playerId)) {
+        alert('Please enter a valid player ID.');
+        return false;
+    }
+    // Check if playerId exists in the database
+    $.ajax({
+        url: '/checkPlayer/' + playerId,
+        type: 'GET',
+        async: false,
+        success: function(response) {
+            if (response === 'true') {
+                return confirm('Are you sure you want to delete player with ID ' + playerId + '?');
+            } else {
+                alert('Player with ID ' + playerId + ' not found.');
+                return false;
             }
-        });
-        
-        var error = "${error}";
-        if (error.trim() !== "") {
-            alert(error);
+        },
+        error: function() {
+            alert('Error checking player ID. Please try again.');
+            return false;
         }
     });
+    return false;
+}
+
+  
 </script>
 <style>
+
     body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -83,13 +117,14 @@
     }
 </style>
 </head>
-<body>
+<body> 
     <h1>Delete Player</h1>
-    <form action="/players/deletePlayer" method="post">
+    <form action="/deletePlayer" method="post">
         <label for="id">Player ID:</label>
         <input type="text" name="id" required><br><br>
         <input type="submit" value="Submit">
     </form>
+
 
 
 </body>

@@ -31,8 +31,11 @@
 </head>
 <body>
     <div class="container">
-    
-    
+    	
+    	<div class="row">
+    		<h1 style="display:none;"></h1>
+    	</div>
+    	
         <div class="row">
         	<div class="col">
         		<h1 style="display:none;">Add</h1>
