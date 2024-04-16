@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar and Card Slider</title>
+    <title>Home Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
@@ -22,7 +22,7 @@
 	}
 	body::after {
             content: "";
-            background: url('bcci.png') no-repeat center center fixed ; width: auto; height: auto;
+            width: auto; height: auto;
             opacity: 0.5;
             top: 0;
             left: 0;
@@ -35,11 +35,8 @@
         
         @charset "utf-8";
 
-/******* Fonts Import Start **********/
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-/********* Fonts Face CSS End **********/
 
-/******* Common Element CSS Start ******/
 * {
   margin: 0px;
   padding: 0px;
@@ -94,9 +91,7 @@ h3 {
 button {
   outline: none !important;
 }
-/******* Common Element CSS End *********/
 
-/* -------- title style ------- */
 .line-title {
   position: relative;
   width: 400px;
@@ -193,9 +188,7 @@ button {
   position: relative;
   z-index: 5;
 }
-/******** Middle section CSS End *******/
 
-/***** responsive css Start ******/
 
 @media (min-width: 992px) and (max-width: 1199px) {
   h2 {
@@ -207,7 +200,6 @@ button {
     line-height: 32px;
   }
 
-  /* -------- Landing page ------- */
   .game-section {
     padding: 50px 30px;
   }
@@ -242,7 +234,6 @@ button {
     width: 330px;
   }
 
-  /* -------- Landing page ------- */
   .game-section {
     padding: 50px 30px 40px;
   }
@@ -276,7 +267,6 @@ button {
     width: 250px;
   }
 
-  /* -------- Landing page ------- */
   .game-section {
     padding: 30px 15px 20px;
   }
@@ -437,16 +427,6 @@ background-attachment: fixed;
 }
 
 
- /*
-.myContainer .myWrapper-holder{
-	display: grid;
-	grid-template-columns: repeat(10, 100%);
-	height: 100%;
-	width:100%;
-	animation: slider 10s ease-in-out infinite alternate;
-}
-
-*/
 @keyframes slider {
     0% { transform: translateX(0%); }
     16.666% { transform: translateX(-100%); }
@@ -472,91 +452,14 @@ background-attachment: fixed;
 	background-size: cover;
 }
 
-/*
-@keyframes slider{
-	0%{transform: translateX(0%);}
-
-	10%{transform: translateX(-100%);}
-
-	20%{transform: translateX(-100%);}
-
-	30%{transform: translateX(-200%);}
-
-	40%{transform: translateX(-200%);}
-
-	50%{transform: translateX(-200%);}
-
-	60%{transform: translateX(-300%);}
-
-	70%{transform: translateX(-300%);}
-	
-	80%{transform: translateX(-300%);}
-
-	90%{transform: translateX(0%);}
-	
-	100%{transform: translateX(0%);}	
+.fa-people-group{
+	color: yellow;
 }
-*/
 
- 
     </style>
 </head>
 
 <body>
-<!-- 
-	<div>
-		<ul class="menu">
-	    <li class="menu_list">
-	        <span class="front fas fa-home"></span>
-	        <a href="#" class="side">Home</a>
-	    </li>
-	    <li class="menu_list">
-	        <span class="front fas fa-group"></span>
-	        <a href="#" class="side">List Players</a>
-	    </li>
-	    <li class="menu_list">
-	        <span class="front fas fa-close"></span>
-	        <a href="#" class="side">Delete Player</a>
-	    </li>
-	    <li class="menu_list">
-	        <span class="front fas fa-edit"></span>
-	        <a href="#" class="side">update Player</a>
-	    </li>
-		</ul>
-	</div>
-	
-	*****************
-	
-<div class="container">
-    <ul class="menu">
-        <li class="menu_list">
-            <span class="front fas fa-home"></span>
-            <a href="/" class="side">Home</a>
-        </li>
-		<li class="menu_list">
-            <span class="front fas fa-add"></span>
-            <a href="addPlayer" class="side">Add</a>
-        </li>
-        <li class="menu_list">
-            <span class="front fas fa-group"></span>
-            <a href="listPlayer" class="side">List Players</a>
-        </li>
-        <li class="menu_list">
-            <span class="front fas fa-close"></span>
-            <a href="deletPlayer" class="side">Delete Player</a>
-        </li>
-        <li class="menu_list">
-            <span class="front fas fa-edit"></span>
-            <a href="updatePlayer" class="side">Update Player</a>
-        </li>
-    </ul>
-</div>
-
-<div class="container">
-    <img alt="Player" src="/image/coll.jpg" style="width: 810px">
-</div>
- -->
-
 
 <div class="container" style="display: flex; justify-content: space-between;">
     <ul class="menu">
@@ -570,7 +473,7 @@ background-attachment: fixed;
         </li>
         <li class="menu_list">
             <span class="front fas fa-group"></span>
-            <a href="listPlayers" class="side"><b>List Players</b></a>
+            <a href="listPlayers" class="side"><b>List All Players</b></a>
         </li>
         <li class="menu_list">
             <span class="front fas fa-close"></span>
@@ -580,11 +483,15 @@ background-attachment: fixed;
             <span class="front fas fa-edit"></span>
             <a href="updatePlayer" class="side"><b>Update Player</b></a>
         </li>
+        <li class="menu_list">
+            <span class="front fas fa-users"></span>
+            <a href="pickTopPlayers" class="side"><b>Top 11 Players</b></a>
+        </li>
     </ul>
 
     <img alt="Player" class="margin-right" src="/image/coll.jpg" style="width: 790px;">
 
-<p class="" style="background-color: #081F3D; color: white; padding: 10px; font-weight: bold; font-family: Roboto, sans-serif; text-align:center;">The 2011 ICC Cricket World Cup held in India, Sri Lanka, and Bangladesh was a memorable event in cricket history, particularly for Indian fans. India's campaign was led by captain MS Dhoni, with a team boasting stars like Tendulkar, Sehwag, and Yuvraj Singh. They defeated Australia in the quarter-finals and Pakistan in the semi-finals, setting up a final clash with Sri Lanka in Mumbai. In the final, Sri Lanka batted first and posted a challenging total of 274/6, with Mahela Jayawardene scoring a brilliant century. In reply, India lost Sehwag and Tendulkar early but Gambhir and MS Dhoni steadied the innings. Dhoni's and Gambhir's became iconic moments in Indian cricket history.</p>
+<p style="background-color: #081F3D; color: white; padding: 10px; font-weight: bold; font-family: Roboto, sans-serif; text-align:center;"><br> <br> <br> <br> <br> The 2011 ICC Cricket World Cup held in India, Sri Lanka, and Bangladesh was a memorable event in cricket history, particularly for Indian fans. India's campaign was led by captain MS Dhoni, with a team boasting stars like Tendulkar, Sehwag, and Yuvraj Singh. They defeated Australia in the quarter-finals and Pakistan in the semi-finals, setting up a final clash with Sri Lanka in Mumbai. In the final, Sri Lanka batted first and posted a challenging total of 274/6, with Mahela Jayawardene scoring a brilliant century. In reply, India lost Sehwag and Tendulkar early but Gambhir and MS Dhoni steadied the innings. Dhoni's and Gambhir's became iconic moments in Indian cricket history.</p>
 </div>
 
 
@@ -718,43 +625,23 @@ background-attachment: fixed;
 		</div>
 	</div>
 
-
-
-<!-- 
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item">
-    	<div class="d-block w-100" style="background-image: url(/image/Mace1.jpg);" alt="First slide">
-    	</div>
+<footer style="padding: 20px; text-align: center;">
+    <p style="margin: 0; color: white; font-size: 15px;">
+        For any queries, please contact us at: <a href="mailto:bcci@gmail.com" style="color: #007bff; text-decoration: none;">bcci@gmail.com</a>
+    </p>
+    <div style="margin-top: 10px;">
+        <a href="https://www.facebook.com/IndianCricketTeam" target="_blank" style="text-decoration: none; margin-right: 10px;">
+            <img src="/logo/facebook.png" alt="Facebook" style="height: 30px; width: auto;">
+        </a>
+        <a href="https://www.twitter.com/BCCI" target="_blank" style="text-decoration: none; margin-right: 10px;">
+            <img src="/logo/x.png" alt="Twitter" style="height: 30px; width: auto;">
+        </a>
+        <a href="https://www.instagram.com/indiancricketteam" target="_blank" style="text-decoration: none; margin-right: 10px;">
+            <img src="/logo/instagram.png" alt="Instagram" style="height: 30px; width: auto;">
+        </a>
+        <img src="/logo/bcci.png" alt="My Logo" style="height: 30px; width: auto;">
     </div>
-    <div class="carousel-item">
-		<div class="d-block w-100" style="background-image: url(/image/Mace3.jpg);" alt="Third slide">
-	   	</div>
-	</div>
-    
-    <div class="carousel-item">
-		<div class="d-block w-100" style="background-image: url(/image/Mace4.jpg);" alt="Third slide">
-	   	</div>
-	</div>
-  
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-
- -->
-
-
-
-
-
-
+</footer>
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

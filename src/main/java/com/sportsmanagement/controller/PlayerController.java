@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,7 +17,6 @@ import com.sportsmanagement.model.Ranks;
 import com.sportsmanagement.service.PlayerService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,12 +37,12 @@ public class PlayerController {
     
     
     //working
-    @GetMapping("/home")
-    public String home(Model model) {
-    	List<Player> players = playerService.getAllPlayers();
-        model.addAttribute("players", players);
-        return "index"; // Assuming index.jsp is your home page````		
-    }
+//    @GetMapping("/home")
+//    public String home(Model model) {
+//    	List<Player> players = playerService.getAllPlayers();
+//        model.addAttribute("players", players);
+//        return "index"; 		
+//    }
     
 
 //below is working perfectly
@@ -52,26 +52,26 @@ public class PlayerController {
     }
 
     @PostMapping("/addPlayer")
-    public String addPlayer(@ModelAttribute Player player, Model model) {
+    public String addPlayer(@ModelAttribute Player player, RedirectAttributes redirectAttributes) {
     	
     	if(playerRepository.existsById(player.getId())) {
-    		model.addAttribute("error", "ID already exists");
-        	return "addPlayer";
+    		redirectAttributes.addFlashAttribute("message", "ID already exists");
+        	return "redirect:/addPlayer";
     	} else if(!player.getName().matches("[a-zA-Z ]+")) {
-    		model.addAttribute("error", "Name must contain only letters");
-        	return "addPlayer";
+    		redirectAttributes.addFlashAttribute("message", "Name must contain only letters");
+        	return "redirect:/addPlayer";
     	} else if(player.getAge()<20 || player.getAge()>45) {
-    		model.addAttribute("error", "Age must be between 20 and 45");
-        	return "addPlayer";
+    		redirectAttributes.addFlashAttribute("message", "Age must be between 20 and 45");
+        	return "redirect:/addPlayer";
     	} else if(playerRepository.existsById(player.getRanks().getT20_rank())) {
-    		model.addAttribute("error", "T20 rank already exists");
-    		return "addPlayer";
+    		redirectAttributes.addFlashAttribute("message", "T20 rank already exists");
+    		return "redirect:/addPlayer";
     	} else if(playerRepository.existsById(player.getRanks().getOdi_rank())) {
-    		model.addAttribute("error", "ODI rank already exists");
-    		return "addPlayer";
+    		redirectAttributes.addFlashAttribute("message", "ODI rank already exists");
+    		return "redirect:/addPlayer";
     	} else if(playerRepository.existsById(player.getRanks().getTest_rank())) {
-    		model.addAttribute("error", "TEST rank already exists");
-    		return "addPlayer";
+    		redirectAttributes.addFlashAttribute("message", "TEST rank already exists");
+    		return "redirect:/addPlayer";
     	}
     	else {
 			Ranks ranks = new Ranks();
@@ -80,20 +80,11 @@ public class PlayerController {
 		    ranks.setTest_rank(player.getRanks().getTest_rank());
 		    player.setRanks(ranks);
 			playerService.addPlayer(player);
-		    return "redirect:/index";
+			redirectAttributes.addFlashAttribute("message", "Added Successfully");
+		    return "redirect:/addPlayer";
     	}
     }
 
-    @PostMapping("/checkIdExists/{id}")
-    @ResponseBody
-    public boolean checkIdExists(@RequestParam int id) {
-    	
-    	boolean idExists = playerService.checkIdExists(id);
-    	
-    	return idExists;
-    }
-    
-// above is working perfectly
     @GetMapping("/listPlayers")
     public ModelAndView listPlayers() {
     	ModelAndView mv = new ModelAndView();
@@ -102,115 +93,79 @@ public class PlayerController {
     	mv.setViewName("listPlayers");
     	return mv;
     }
-
-    @GetMapping("/checkPlayer/{id}")
-    @ResponseBody
-    public String checkPlayerExists(@PathVariable("id") int id) {
-        return playerRepository.existsById(id) ? "true" : "false";
-    }
-
     
-    //working
-    @PostMapping("/addAll")
-    public ResponseEntity<List<Player>> addPlayers(@RequestBody List<Player> players) {
-        List<Player> newPlayers = playerService.addPlayers(players);
-        return new ResponseEntity<>(newPlayers, HttpStatus.CREATED);
-    }
-
-    
-    
-    //below DELETE WORKING
-    
-//    @GetMapping("/deletePlayer")
-//    public String showDeletePlayerForm(@PathVariable int id, RedirectAttributes redirectAttributes) {
-//    	if(playerService.deletePlayer(id)) {
-//    		redirectAttributes.addFlashAttribute("message", "Deleted Successfully");
-//    		return "redirect:/index";
-//    	}
-//    	redirectAttributes.addFlashAttribute("message", "ID not found");
-//    	return "redirect:/index";
-//    
-//    }
-
-    
-    
-//    @PostMapping("/deletePlayer")
-//    public String deletePlayer(@RequestParam("id") int id, Model model) {
-//  	Optional<Player> opt = playerRepository.findById(id);
-//  	if(opt.isPresent()) {
-//  		playerService.deletePlayer(id);
-//  		model.addAttribute("id", "ID " + id +" deleted successfully");
-//  		return "confirmDelete";
-//  	} else {
-//  		model.addAttribute("error", "Player with ID " + id + " not found");
-//  		return "redirect:/deletePlayer";
-//  	}
-
-  	
-  	
-//		old codes  	
     @GetMapping("/deletePlayer")
     public String showDeletePlayerForm() {
         return "deletePlayer";
     }
+    
     @PostMapping("/deletePlayer")
-    public String deletePlayer(@RequestParam("id") int id, Model model, RedirectAttributes redirectAttributes) {
+    public String deletePlayer(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
     	Optional<Player> opt = playerRepository.findById(id);
     	if(opt.isPresent()) {
     		playerService.deletePlayer(id);
-//    		model.addAttribute("id", "ID " + id +" deleted successfully");
     		redirectAttributes.addFlashAttribute("message", "Deleted Successfully");
-    		return "redirect:/index";
+    		return "redirect:/deletePlayer";
     	} else {
-//    		model.addAttribute("error", "Player with ID " + id + " not found");
     		redirectAttributes.addFlashAttribute("message", "ID not found");
     		return "redirect:/deletePlayer";
     	}
     }
-    //above code DELETE WORKING
-    
-
-    //working
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<Player> getPlayerById(@PathVariable("id") int id) {
-        Player player = playerService.getPlayerById(id);
-        return new ResponseEntity<>(player, player != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
-    }
 
     @GetMapping("/pickTopPlayers")
-    public String getTopPlayersFromODIRank() {
-//        List<Player> topPlayers = playerService.getTopPlayers();
-        return "pickTopPlayers";
+    public String showlistPlayers() {
+    	return "pickTopPlayers";
     }
-
     
     
-    //below Update Code working
+    @GetMapping("/getTop11")
+    public ModelAndView listPlayer(@RequestParam String value) {
+    	ModelAndView mv = new ModelAndView();
+    	List<Player> players = new ArrayList<>();
+    	if(value!=null && value.equalsIgnoreCase("odi")) {
+    		players.addAll(playerService.getTopPlayers("ODI", "Batsmen", 5));
+    		players.addAll(playerService.getTopPlayers("ODI", "WicketKeeper", 1));
+    		players.addAll(playerService.getTopPlayers("ODI", "AllRounder", 2));
+    		players.addAll(playerService.getTopPlayers("ODI", "Bowler", 3));
+    	} else if(value != null && value.equalsIgnoreCase("t20")) {
+    		players.addAll(playerService.getTopPlayers("T20", "Batsmen", 5));
+    		players.addAll(playerService.getTopPlayers("T20", "WicketKeeper", 1));
+    		players.addAll(playerService.getTopPlayers("T20", "AllRounder", 2));
+    		players.addAll(playerService.getTopPlayers("T20", "Bowler", 3));
+    	} else if(value != null && value.equalsIgnoreCase("test")) {
+    		players.addAll(playerService.getTopPlayers("Test", "Batsmen", 5));
+    		players.addAll(playerService.getTopPlayers("Test", "WicketKeeper", 1));
+    		players.addAll(playerService.getTopPlayers("Test", "AllRounder", 2));
+    		players.addAll(playerService.getTopPlayers("Test", "Bowler", 3));
+    	}
+    	mv.addObject("players", players);
+    	mv.setViewName("listTopPlayers");
+    	return mv;
+    }
+    
     @GetMapping("/updatePlayer")
     public String showUpdatePlayerForm() {
         return "updatePlayer";
     }
 
     @PostMapping("/updatePlayer")
-    public String updatePlayer(@RequestParam int id, @RequestParam String type, @RequestParam String value, Model model) {
+    public String updatePlayer(@RequestParam int id, @RequestParam String type, @RequestParam String value, RedirectAttributes redirectAttributes) {
         if(!playerService.checkIdExists(id)) {
-        	model.addAttribute("message", "Player with ID " + id + " not found");
-        	return "updatePlayer";
+        	redirectAttributes.addFlashAttribute("message", "Player ID not found");
+        	return "redirect:/updatePlayer";
         }
     	if ("age".equalsIgnoreCase(type)) {
             playerService.updatePlayerAge(id, Integer.parseInt(value));
-            model.addAttribute("message", "Player with ID " + id + "'s age was updated");
-        	return "redirect:/";
+            redirectAttributes.addFlashAttribute("message", "Age was updated");
+        	return "redirect:/updatePlayer";
     	} else if ("department".equalsIgnoreCase(type)) {
     		playerService.updatePlayerDepartment(id, value);
-            model.addAttribute("message", "Player with ID " + id + "'s department was updated");
-        	return "redirect:/";
+    		redirectAttributes.addFlashAttribute("message", "Department was updated");
+        	return "redirect:/updatePlayer";
     	} else {
-    		return "redirect:/";
+    		return "redirect:/updatePlayer";
     	}
     }
-    
-    //above Update code working
     
 }
 

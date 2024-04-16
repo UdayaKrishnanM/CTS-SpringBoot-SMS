@@ -8,6 +8,7 @@
 <title>Player List</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
+    /* Custom CSS for styling */
     body {
         padding-top: 20px;
         background-color: #081F3D
@@ -38,16 +39,17 @@
     	
         <div class="row">
         	<div class="col">
-        		<h1 style="display:none;">Add</h1>
+              	<button class="btn btn-primary right" onclick="window.location.href='/pickTopPlayers'">Go Back...</button>
         	</div>
             <div class="col">
-                <h1 class="text-center" style="color: white;"><strong>Player's List</strong></h1>
+                <h1 class="text-center" style="color: white;"><strong>Top 11 List</strong></h1>
             </div>
             <div class="col">
                 <button class="btn btn-primary right" onclick="window.location.href='/index'">Home</button>
             </div>
         </div>
         <br>
+        
         <div class="row">
             <% 
                 List<Player> dataList = (List<Player>)request.getAttribute("players");
@@ -55,15 +57,12 @@
             %>
             <div class="col-md-4 player-card">
                 <div class="card card-hover">
+                    <!-- Player Image Section -->
                     <img class="card-img-top player-image" src="/image/<%=dataList.get(c).getId()%>.png" alt="Player Image">
                     <div class="card-body">
                         <h5 class="card-title"><%= dataList.get(c).getName() %></h5>
                         <p class="card-text">ID: <%= dataList.get(c).getId() %></p>
-                        <p class="card-text">Age: <%= dataList.get(c).getAge() %></p>
                         <p class="card-text">Department: <%= dataList.get(c).getDepartment() %></p>
-                        <p class="card-text">T20 Rank: <%= (dataList.get(c).getRanks() != null) ? dataList.get(c).getRanks().getT20_rank() : "" %></p>
-                        <p class="card-text">ODI Rank: <%= (dataList.get(c).getRanks() != null) ? dataList.get(c).getRanks().getOdi_rank() : "" %></p>
-                        <p class="card-text">Test Rank: <%= (dataList.get(c).getRanks() != null) ? dataList.get(c).getRanks().getTest_rank() : "" %></p>
                     </div>
                 </div>
             </div>

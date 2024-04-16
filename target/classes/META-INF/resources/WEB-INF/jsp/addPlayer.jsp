@@ -45,13 +45,10 @@
 
 <style>
     body {
-    	background-image: url('https://wallpaperaccess.com/full/3818893.jpg');
-    	background-repeat: no-repeat;
-    	background-size: cover;
+        background-color: #081F3D;
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f3f3f3;
     }
 
     h2 {
@@ -59,18 +56,12 @@
         margin-top: 5px;
         margin-bottom: 10px;
     }
-	
-	form:hover{
-		border: 1px solid black;
-	}
 
     form {
         width: 50%;
-		border-color: black;
         margin: 0 auto;
         padding: 20px;
-/*        background-color: #fff;*/
-		background: transparent;
+        background-color: rgba(255, 255, 255, 0.7);
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
@@ -78,6 +69,7 @@
     label {
         display: block;
         margin-bottom: 5px;
+        color: #333;
     }
 
   	input[type="text"],
@@ -94,37 +86,20 @@
 
 
     input[type="submit"] {
-        width: 100%;
+        width: 98%;
         background-color: #4CAF50;
         color: white;
         padding: 10px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        
     }
 
     input[type="submit"]:hover {
         background-color: #45a049;
     }
 
-    .error {
-	   color: red;
-	   font-family: sans-serif;
-    }
-    
-    .error{
-	    animation: shake 0.5s;
-	}
-		
-	@keyframes shake {
-	    0% { transform: translateX(0); }
-	    20% { transform: translateX(-10px); }
-	    40% { transform: translateX(10px); }
-	    60% { transform: translateX(-10px); }
-	    80% { transform: translateX(10px); }
-	    100% { transform: translateX(0); }
-	}
-    
 
  
     
@@ -143,7 +118,7 @@
         		<h1 style="display:none;">Add</h1>
         	</div>
             <div class="col">
-                <h2 class="text-center"><b>Add a Player List</b></h2>
+                <h2 class="text-center" style="color: white;"><b>Add a Player</b></h2>
             </div>
             <div class="col">
                 <button class="btn btn-primary right" onclick="window.location.href='/index'">Home</button>
@@ -153,40 +128,54 @@
 
 
 <form action="/addPlayer" name="addPlayerForm" method="post" onsubmit="return validateForm()">
-	<b>
-	<div class="error" id="error"><h5>${error}</h5></div>
 	
-    <label for="id">ID:</label>
-    <input type="text" id="id" name="id" required><br>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br>
-
-    <label for="age">Age:</label>
-    <input type="number" id="age" min="20" max="45" name="age" required><br>
-
-    <label for="department">Select the department:</label>
-    <select id="department" name="department" required>
-        <option value="Batsmen">Batsmen</option>
-        <option value="Bowler">Bowler</option>
-        <option value="WicketKeeper">WicketKeeper</option>
-        <option value="AllRounder">AllRounder</option>
-    </select><br>
-
-    <label for="t20_rank">T20 Rank:</label>
-    <input type="number" id="t20_rank" name="ranks.t20_rank" required><br>
-
-    <label for="odi_rank">ODI Rank:</label>
-    <input type="number" id="odi_rank" name="ranks.odi_rank" required><br>
-
-    <label for="test_rank">Test Rank:</label>
-    <input type="number" id="test_rank" name="ranks.test_rank" required><br>
-
-    <input type="submit" value="Submit">
+	<b>
+	    <label for="id">ID:</label>
+	    <input type="text" id="id" name="id" required><br>
+	    <label for="name">Name:</label>
+	    <input type="text" id="name" name="name" required><br>
+	
+	    <label for="age">Age:</label>
+	    <input type="number" id="age" min="20" max="45" name="age" required><br>
+	
+	    <label for="department">Select the department:</label>
+	    <select id="department" name="department" required>
+	        <option value="Batsmen">Batsmen</option>
+	        <option value="Bowler">Bowler</option>
+	        <option value="WicketKeeper">WicketKeeper</option>
+	        <option value="AllRounder">AllRounder</option>
+	    </select>
+	
+	    <label for="t20_rank">T20 Rank:</label>
+	    <input type="number" id="t20_rank" name="ranks.t20_rank" required><br>
+	
+	    <label for="odi_rank">ODI Rank:</label>
+	    <input type="number" id="odi_rank" name="ranks.odi_rank" required><br>
+	
+	    <label for="test_rank">Test Rank:</label>
+	    <input type="number" id="test_rank" name="ranks.test_rank" required><br>
+	
+	    <input type="submit" value="Submit">
 
 	
 	</b>
 </form>
-<br>
+
+<script>
+
+	$(document).ready(function(){
+		var error = "${message}";
+		if(error === "Added Successfully"){
+			alert(error);
+			window.location.href = '/index';
+		} else if(error.trim()!==""){
+			alert(error)
+		}
+		
+		
+	});
+	
+</script>
 
 </body>
 </html>

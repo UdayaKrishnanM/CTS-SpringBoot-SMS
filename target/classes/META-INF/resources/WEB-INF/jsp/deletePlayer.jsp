@@ -6,71 +6,15 @@
 <meta charset="ISO-8859-1">
 <title>Delete a Player</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-   
-//document.addEventListener("DOMContentLoaded", function() {
-  //      var message = "${message}";
-    //    if (message.trim() !== "") {
-      //      alert(message);
-        //}
-        
-//        document.querySelector("form").addEventListener("submit", function(event) {
- //           var confirmDelete = confirm('Are you sure you want to delete this player?');
-  //          if (!confirmDelete) {
-    //            event.preventDefault(); // Prevent form submission if user cancels
-      //      } else{
- //           	alert("$error");
- //           }
- //       });
-        
- //       var error = "${error}";
- //       if (error.trim() !== "") {
-  //          alert(error);
-   //     }
-  //  });
-  
-  function validateForm() {
-    var playerId = document.getElementById('id').value;
-    // Check if playerId is a number
-    if (isNaN(playerId)) {
-        alert('Please enter a valid player ID.');
-        return false;
-    }
-    // Check if playerId exists in the database
-    $.ajax({
-        url: '/checkPlayer/' + playerId,
-        type: 'GET',
-        async: false,
-        success: function(response) {
-            if (response === 'true') {
-                return confirm('Are you sure you want to delete player with ID ' + playerId + '?');
-            } else {
-                alert('Player with ID ' + playerId + ' not found.');
-                return false;
-            }
-        },
-        error: function() {
-            alert('Error checking player ID. Please try again.');
-            return false;
-        }
-    });
-    return false;
-}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-  
-</script>
 <style>
-
     body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-    }
-
-    h1 {
-        text-align: center;
-        margin-top: 20px;
-        color: #fff;
+        background-color: #081F3D;
+        
     }
 
     form {
@@ -118,7 +62,19 @@
 </style>
 </head>
 <body> 
-    <h1>Delete Player</h1>
+	<br>
+    <div class="row">
+        	<div class="col">
+        		<h1 style="display:none;"></h1>
+        	</div>
+            <div class="col">
+                <h1 class="text-center" style="color: white;"><strong>Delete Player</strong></h1>
+            </div>
+            <div class="col">
+                <button class="btn btn-primary right" onclick="window.location.href='/index'">Home</button>
+            </div>
+        </div>
+        <br>
     <form action="/deletePlayer" method="post">
         <label for="id">Player ID:</label>
         <input type="text" name="id" required><br><br>
@@ -126,6 +82,28 @@
     </form>
 
 
+<script>
+
+
+	function validateForm() {
+	  var playerId = document.getElementById('id').value;
+	  if (isNaN(playerId)) {
+	      alert('Please enter a valid player ID.');
+	      return false;
+	  }
+	  return false;
+	}
+    $(document).ready(function() {
+        var message = "${message}";
+        if (message === "Deleted Successfully") {
+            alert(message);
+            window.location.href='/index';
+            
+        } else if(message.trim() !==""){
+        	alert(message);
+        }
+    });
+</script>
 
 </body>
 </html>

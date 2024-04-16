@@ -5,6 +5,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,17 +26,19 @@ public class Player {
 	  @Pattern(regexp = "^[a-zA-Z ]+$", message = "Name must contain only letters")
 	  private String name;
 	
+	  @JsonIgnore
 	  @Column(name = "player_age")
 	  @Min(value = 20, message = "Age must be atleast 20")
 	  @Max(value = 45, message = "Age must be atleast 45")
 	  private int age;
-	
+
 	  @Column(name = "player_department")
 	  private String department;
 	
+	  @JsonIgnore
 	  @OneToOne(cascade = CascadeType.ALL, mappedBy = "player")
 	  @PrimaryKeyJoinColumn
-	    private Ranks ranks;
+	  private Ranks ranks;
 
 	  
 	  
@@ -62,6 +67,17 @@ public class Player {
 			this.age = age;
 			this.department = department;
 		}
+
+
+
+		public Player(int id, String name) {
+			super();
+			this.id = id;
+			this.name = name;
+		}
+
+		
+		
 	
 	
 }	

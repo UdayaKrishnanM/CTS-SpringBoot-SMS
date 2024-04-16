@@ -9,8 +9,4 @@ import com.sportsmanagement.model.Ranks;
 
 public interface RanksRepository extends JpaRepository<Ranks, Integer>{
 
-	
-//	 @Query("SELECT r FROM Ranks r ORDER BY r.odi_rank ASC")
-//	 List<Ranks> findTopODIRankedPlayers();
-
 }

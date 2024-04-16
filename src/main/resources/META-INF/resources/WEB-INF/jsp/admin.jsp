@@ -163,7 +163,6 @@ label {
 
                             <div class="col-lg-12 loginbttm">
                                 <div class="col-lg-6 login-btm login-text">
-                                    <!-- Error Message -->
                                 </div>
                                 <div class="col-lg-6 login-btm login-button">
                                     <button type="submit" class="btn btn-outline-primary">LOGIN</button>
@@ -178,7 +177,14 @@ label {
         </div>
 
 
-
+	<script>
+    $(document).ready(function() {
+        var message = "${message}";
+		if(message.trim() !==""){
+        	alert(message);
+        }
+    });
+	</script>
 
 
 </body>

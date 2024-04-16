@@ -187,3 +187,88 @@ add image input tag in addPlayer and make sure it gets saved in image dir
 
 </body>
 </html>
+
+
+
+
+
+
+
+********
+********
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Pick Top Players</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script>
+    function showInput() {
+        var type = document.getElementById("");
+        switch(team) {
+            case 'ODI':
+                teamName = 'ODI Players';
+                break;
+            case 'T20':
+                teamName = 'T20 Players list';
+                break;
+            case 'Test':
+                teamName = 'Test Players list';
+                break;
+            default:
+                teamName = 'Unknown Team';
+        }
+        document.getElementById('teamName').innerText = teamName;
+    }
+</script>
+</head>
+
+<style>
+    body {
+        background-color: #081F3D;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<body>	
+    <div class="row">
+        <div class="col">
+            <h1 style="display:none;"></h1>
+        </div>
+        <div class="col">
+            <h1 class="text-center" style="color: white;"><strong>Pick Top Players</strong></h1>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary right" onclick="window.location.href='/index'">Home</button>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">	
+        <div class="col">
+            <h1 style="display:none;"></h1>
+        </div>
+        <div class="col">
+            <form action="/pickTopPlayers" method="post">
+                <input type="submit" onchange="showInput()" class="btn btn-primary right" value="ODI" id="ODI" value="ODI Team">
+            </form>
+        </div>
+        <div class="col">
+            <form action="/pickTopPlayers" method="post">
+                <input type="submit" onchange="showInput()" class="btn btn-primary right" value="T20" id="T20" value="T20 Team">
+            </form>
+        </div>	
+        <div class="col">
+            <form action="/pickTopPlayers" method="post">
+                <input type="submit" onchange="showInput()" class="btn btn-primary right" value="Test" id="Test" value="Test Team">
+            </form>
+        </div>		
+    </div>
+    
+    <h2 class="text-center" style="color: white;" id="teamName"></h2>
+</body>
+</html>
+

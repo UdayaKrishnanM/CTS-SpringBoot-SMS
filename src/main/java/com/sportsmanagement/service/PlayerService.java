@@ -16,19 +16,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {
-
+	
     @Autowired
     private PlayerRepository playerRepository;
 
     @Autowired
     private RanksRepository ranksRepository;
-
-    
     
     public Player addPlayer(Player player) {
         Ranks ranks = player.getRanks();
         if (ranks != null) {
-        	//setPlayer 1st, then rankRe.save(ranks)
         	ranks.setPlayer(player);
         	ranks = ranksRepository.save(ranks);
         }
@@ -36,71 +33,43 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
-    
-    // old code
-//    public Player addPlayer(Player player) {
-//        return playerRepository.save(player);
-//    }
 
-    public List<Player> addPlayers(List<Player> players) {
-    	for (Player player : players) {
-            if (player.getRanks() != null) {
-                player.getRanks().setPlayer(player);
-            }
-        }
-        return playerRepository.saveAll(players);
-//    	old code
-//    	return playerRepository.saveAll(players);
-    }
-
-
-    	
     public boolean deletePlayer(int id) {
-
     	playerRepository.deleteById(id);
     	if(playerRepository.findById(id).isEmpty()) {
     		return true;
     	}
     	 return false;
-    	
-//    old code workd
-//    	boolean flag = true;
-//    	if(playerRepository.findById(id) != null) {
-//    		playerRepository.deleteById(id);
-//    		return true;
-//    	} else {
-//    		return false;
-//    	}
     }
 
     public List<Player> getAllPlayers() {
         return playerRepository.findAll();
     }
 
-    public Player getPlayerById(int id) {
-        return playerRepository.findById(id).orElse(null);
+    public List<Player> getTopPlayers(String dept, String formatt, int limit) {
+		List<Object[]> topData = new ArrayList<>();
+    			
+		if(dept.equalsIgnoreCase("odi")) {
+			topData = playerRepository.getTopODIPlayers(formatt, limit);
+		} else if(dept.equalsIgnoreCase("t20")) {
+			topData = playerRepository.getTopT20Players(formatt, limit);
+		} else if(dept.equalsIgnoreCase("test")) {
+			topData = playerRepository.getTopTestPlayers(formatt, limit);
+		}
+    	
+    	List<Player> res = new ArrayList<>();
+    	for(Object[] playerData: topData) {
+    		int playerId = (int) playerData[0];
+    		String playerName = (String) playerData[1];
+    		String playerDept = (String) playerData[2];
+    		Player player = new Player();
+    		player.setId(playerId);
+    		player.setName(playerName);
+    		player.setDepartment(playerDept);
+    		res.add(player);
+    	}
+    	return res;    			
     }
-
-//    public List<Player> getTopPlayers() {
-//        List<Player> batsmen = playerRepository.topPlayers("ODI", "Batsmen", 5);
-//        List<Player> wicketKeepers = playerRepository.topPlayers("ODI", "Wicketkeeper", 1);
-//        List<Player> allRounders = playerRepository.topPlayers("ODI", "Allrounder", 2);
-//        List<Player> bowlers = playerRepository.topPlayers("ODI", "Bowler", 3);
-//
-//        List<Player> topPlayers = new ArrayList();
-//        topPlayers.addAll(batsmen);
-//        topPlayers.addAll(wicketKeepers);
-//        topPlayers.addAll(allRounders);
-//        topPlayers.addAll(bowlers);
-//        
-////		not working code
-////        List<Player> top11Players = topPlayers.stream()
-////                .limit(11)
-////                .collect(Collectors.toList());
-////
-//        return topPlayers;
-//    }
-    
 
     public Player updatePlayerDepartment(int id, String department) {
         Player player = playerRepository.findById(id).orElse(null);
@@ -110,7 +79,6 @@ public class PlayerService {
         }
         return null;
     }
-
     
     public Player updatePlayerAge(int id, int age) {
         Player player = playerRepository.findById(id).orElse(null);
@@ -121,47 +89,8 @@ public class PlayerService {
         return null;
     }
 
-
 	public boolean checkIdExists(int id) {
-//		Optional<Player> player = playerRepository.findById(id);
-//		return player.isPresent();
-		
-//		or
 		return playerRepository.existsById(id);
 	}
 	
 }
-
-
-
-
-
-
-
-//	@Autowired
-//    private PlayerRepository playerRepository;
-//
-//    public PlayerService(PlayerRepository playerRepository) {
-//        this.playerRepository = playerRepository;
-//    }
-//
-//    public List<Player> getAllPlayers() {
-//        return playerRepository.findAll();
-//    }
-//
-//    public Player getPlayerById(int id) {
-//        Optional<Player> playerOptional = playerRepository.findById(id);
-//        return playerOptional.orElse(null);
-//    }
-//
-//    public void addPlayer(Player player) {
-//        playerRepository.save(player);
-//    }
-//
-//    public void updatePlayer(Player player) {
-//        playerRepository.save(player);
-//    }
-//
-//    public void deletePlayer(int id) {
-//        playerRepository.deleteById(id);
-//    }

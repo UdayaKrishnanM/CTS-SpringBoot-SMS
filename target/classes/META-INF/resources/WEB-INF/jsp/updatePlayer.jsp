@@ -6,9 +6,11 @@
 <meta charset="ISO-8859-1">
 <title>Update a Player Details</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
 <script>
     
-
     function showInput() {
         var type = document.getElementById("type").value;
         var inputContainer = document.getElementById("inputContainer");
@@ -16,7 +18,6 @@
             inputContainer.innerHTML = '<label for="value">Enter the age:</label>' +
                 '<input type="number" id="value" min="20" max="45" name="value" required>';
         } else if (type === "department") {
-            // Show dropdown for department
             inputContainer.innerHTML = '<label for="value">Select the department:</label>' +
                 '<select id="value" name="value" required>' +
                 '<option value="Batsmen">Batsmen</option>' +
@@ -27,12 +28,8 @@
         }
     }
     
-    var message = "${message}";
-    if (message.trim() !== "" && performance.navigation.type !== 1) {
-        alert(message);
-    }
 
-    function validateForm(event) {
+    function validateForm() {
         var id = document.getElementById("id").value;
         var type = document.getElementById("type").value;
         var value = document.getElementsByName("value")[0].value;
@@ -55,20 +52,15 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f0f0f0;
-    }
-
-    h1 {
-        text-align: center;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        background-color: #081F3D
+        
     }
 
     form {
         width: 50%;
         margin: 0 auto;
         padding: 20px;
-        background-color: #fff;
+        background-color: rgba(255, 255, 255, 0.7);
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
@@ -109,8 +101,20 @@
 </style>
 </head>
 <body>
-    <h1>Update Player</h1>
-    <form action="/players/updatePlayer" method="post" onsubmit="return validateForm()">
+	<br>
+	<div class="row">
+        	<div class="col">
+        		<h1 style="display:none;"></h1>
+        	</div>
+            <div class="col">
+                <h1 class="text-center" style="color: white;"><strong>Update Player</strong></h1>
+            </div>
+            <div class="col">
+                <button class="btn btn-primary right" onclick="window.location.href='/index'">Home</button>
+            </div>
+     </div>
+
+    <form action="/updatePlayer" method="post" onsubmit="return validateForm()">
         <label for="id">Player ID:</label>
         <input type="text" id="id" name="id" required><br><br>
         
@@ -127,5 +131,25 @@
         
         <input type="submit" value="Submit">
     </form>
+    
+    <script>
+	$(document).ready(function() {
+	    var message = "${message}";
+        var id = document.getElementById("id").value;
+	    if (message === "Age was updated") {
+	        alert(message);
+	        window.location.href='/index';
+	        
+	    } else if(message === "Department was updated"){
+	    	alert(message);
+	        window.location.href='/index';
+	    } 
+	    else if(message.trim() !==""){
+	    	alert(message);
+	    }
+	});
+
+    </script>
+    
 </body>
 </html>
