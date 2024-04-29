@@ -15,11 +15,8 @@ public class Ranks {
 	@Column(name = "player_id")
 	private int id;
 	
-	  @Column(unique = true)
 	  private int t20_rank;
-	  @Column(unique = true)
 	  private int odi_rank;
-	  @Column(unique = true)
 	  private int test_rank;
 
 	  	@JsonIgnore

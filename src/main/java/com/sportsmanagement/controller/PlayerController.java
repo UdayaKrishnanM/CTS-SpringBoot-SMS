@@ -36,16 +36,6 @@ public class PlayerController {
     }
     
     
-    //working
-//    @GetMapping("/home")
-//    public String home(Model model) {
-//    	List<Player> players = playerService.getAllPlayers();
-//        model.addAttribute("players", players);
-//        return "index"; 		
-//    }
-    
-
-//below is working perfectly
     @GetMapping("/addPlayer")
     public String showAddPlayerForm() {
     	return "addPlayer";
